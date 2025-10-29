@@ -12,7 +12,7 @@ function App() {
                 <Route path="/list" element={<List />} />
             </Routes>
         </Router>
-       {/* // <List/> */}
+      
     </>
   )
 }
