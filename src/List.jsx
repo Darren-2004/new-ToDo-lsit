@@ -88,7 +88,7 @@ function List() {
     }
 
     return (
-        <div className='p-5 flex items-center flex-col'>
+        <div className='flex justify-center flex-col'>
             <button 
                 className="absolute top-10 left-10"
                 // Navigate back to MyToDoList
