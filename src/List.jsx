@@ -60,40 +60,62 @@
 //     )
 // }
 // export default List
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import icon from './assets/icon.svg'
 
 function List() {
     const [storedArray, setStoredArray] = useState([]);
+    const navigate = useNavigate(); // Use the navigate hook
 
     useEffect(() => {
-        const storedJsonString = localStorage.getItem('tasks'); // Retrieve tasks from local storage
+        const storedJsonString = localStorage.getItem('tasks');
 
         if (storedJsonString) {
             const parsedArray = JSON.parse(storedJsonString);
-            setStoredArray(parsedArray); // Update state with the retrieved tasks
+            setStoredArray(parsedArray);
         } else {
-            console.log('No data found'); // Log if no data is available
+            console.log('No data found');
         }
     }, []);
 
+    
+    function handleRemoveTask(id) {
+        // Filter out the task with the given id
+        const updatedArray = storedArray.filter(item => item.id !== id);
+        setStoredArray(updatedArray);
+        localStorage.setItem('tasks', JSON.stringify(updatedArray)); // Update local storage
+    }
+
     return (
-        <div>
+        <div className='p-5 flex items-center flex-col'>
+            <button 
+                className="absolute top-10 left-10"
+                // Navigate back to MyToDoList
+            >
+                Back
+            </button>
             <h1>Retrieved Data</h1>
             {storedArray.length > 0 ? (
-                <ul>
-                    {/* Display each task's properties */}
-                    {storedArray.map(item => (
-                        <li key={item.id} className="w-50 bg-slate-900 rounded-[10px] text-left uppercase text-white p-5 flex flex-col gap-2 relative">
-                            <p className="text-xl">{item.title}</p>
-                            <p className="text-gray-500 text-sm">{item.work}</p>
-                            {/* Dynamically set the background color */}
-                            <div className={`w-[20px] h-[20px] bg-${item.color}-500 rounded-full absolute right-3 bottom-3`}></div>
+                <ul className='grid grid-cols-2 gap-5 md:grid-cols-3 md:gap-10 lg:grid-cols-4 lg:gap-15 '>
+                    {storedArray.map((item,index) => (
+                        <li key={item.id} className="w-45 h-40 md:w-66 md:h-60 bg-slate-900 rounded-[10px]  uppercase p-5 relative ">
+                            <div className='text-left h-4/5 overflow-hidden text-wrap flex flex-col gap-2'>
+                            <p className="text-xl  truncate ">{item.title}</p>
+                            <p className="text-gray-500 text-sm h-auto h-2/4 text-wrap truncate">{item.work}</p>
+                            </div>
+                           <div className="w-[20px] h-1/8 rounded-full truncate absolute right-3 bottom-3 " style={{ backgroundColor: item.color }}></div>
+                            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=delete" />
+                            <span className="material-symbols-outlined absolute left-3 bottom-3 cursor-pointer " onClick={()=> handleRemoveTask(item.id)}>delete</span>
+                            
                         </li>
                     ))}
+                    <div></div>
                 </ul>
             ) : (
-                <p>No data available</p> // Message if no data is present
+                <p>No data available</p>
             )}
+            <img src= {icon} className='w-[100px] h-[100px] m-10 cursor-pointer'  onClick={() => navigate('/')}/>
         </div>
     );
 }
