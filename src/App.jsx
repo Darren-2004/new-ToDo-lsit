@@ -1,6 +1,6 @@
 import List from './List'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MyToDoList from './myToDoList'
+import MyToDoList from './MyToDoList'
 import './App.css'
 
 function App() {
