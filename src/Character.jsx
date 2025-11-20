@@ -56,19 +56,18 @@ function Character() {
                 </button>
             </div>
         </div>
-         <div className="flex flex-col items-center justify-center p-4">
-            <h1 className="text-xl">Character List</h1>
-            {error && <p>Error fetching character data: {error}</p>}
-            <ul>
-                {characters.map(character => (
-                    <li key={character.id} className="grid grid-cols-4 h-25 w-250 border-1 divide-x-1">
-                       <img className ="col-span-1" src={character.images[0]} alt={character.name} />    
-                         <h2 className ="col-span-3"> Character name : {character.name} </h2>
-                       
-                    </li>
-                ))}
-            </ul>
-        </div>
+        <div className="text-black flex flex-col items-center justify-center p-4">
+            <h1 className="text-2xl font-bold mb-4">Character List</h1>
+             {error && <p className="text-red-500 mb-4">Error fetching character data: {error}</p>}
+             <ul className="w-full max-w-4xl">
+               {characters.map(character => (
+            <li key={character.id} className="grid grid-cols-4 items-center p-4 bg-white rounded shadow-md mb-4 border border-gray-300 divide-x">
+                <img className="col-span-1 w-20 h-16 object-cover rounded" src={character.images[0]} alt={character.name} />    
+                <h2 className="col-span-3 pl-4 text-lg font-semibold">Character Name: {character.name}</h2>
+            </li>
+        ))}
+    </ul>
+</div>
         </>
        
     );
