@@ -5,7 +5,7 @@ function Character() {
     const [characters, setCharacters] = useState([]); // Initialize as an empty array
     const [error, setError] = useState(null);
 
-    const API_URL = 'https://dattebayo-api.onrender.com/characters?limit=5';
+    const API_URL = 'https://dattebayo-api.onrender.com/characters?name=Naruto&limit=2';
 
     useEffect(() => {
         // Fetch character data
@@ -28,8 +28,8 @@ function Character() {
     }, []);
 
     return (
-        <div>
-            <h1>Character List</h1>
+        <div className="flex flex-col items-center justify-center p-4">
+            <h1 className="text-xl">Character List</h1>
             {error && <p>Error fetching character data: {error}</p>}
             <ul>
                 {characters.map(character => (
@@ -37,8 +37,7 @@ function Character() {
                         {character.images[0]}   
                         <h2>Character name : {character.name}</h2>
                         <img src={character.images[0]}  />
-                        <h3>character father name : {character.family.father}</h3>
-                        <h3>character mother name : {character.family.mother}</h3>
+                        <h3>{character.debut.anime || "undefined"}</h3>
                     </li>
                 ))}
             </ul>
