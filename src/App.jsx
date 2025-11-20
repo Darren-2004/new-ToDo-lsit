@@ -7,13 +7,13 @@ import Character from './Character';
 function App() {
   return (
     <>
-    <Router>
+    {/* <Router>
             <Routes>
                 <Route path="/" element={<MyToDoList />} />
                 <Route path="/list" element={<List />} />
                 rou
             </Routes>
-        </Router> 
+        </Router>  */}
 
         <Character/>
       
