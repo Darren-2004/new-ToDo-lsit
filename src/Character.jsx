@@ -59,9 +59,9 @@ function Character() {
         <div className="text-black flex flex-col items-center justify-center p-4">
             <h1 className="text-2xl font-bold mb-4">Character List</h1>
              {error && <p className="text-red-500 mb-4">Error fetching character data: {error}</p>}
-             <ul className="w-full max-w-4xl">
+             <ul className="flex flex-col w-full max-w-4xl justify-center items-center">
                {characters.map(character => (
-            <li key={character.id} className=" flex flex-col items-center p-4 bg-white rounded shadow-md mb-4 border border-gray-300 divide-x w-100 h-100">
+            <li key={character.id} className=" flex flex-col items-center p-4 bg-white rounded shadow-md mb-4 border border-gray-300 divide-x w-90 h-100">
                 <img className="col-span-1 w-20 h-16 object-cover rounded h-full w-full" src={character.images[0]} alt="No image for ${character.name}" />    
                 <h2 className="col-span-3 pl-4 text-lg font-semibold h-1/5">Character Name: {character.name}</h2>
             </li>
