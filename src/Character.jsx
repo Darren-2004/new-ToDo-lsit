@@ -61,9 +61,9 @@ function Character() {
              {error && <p className="text-red-500 mb-4">Error fetching character data: {error}</p>}
              <ul className="w-full max-w-4xl">
                {characters.map(character => (
-            <li key={character.id} className="grid grid-cols-4 items-center p-4 bg-white rounded shadow-md mb-4 border border-gray-300 divide-x">
-                <img className="col-span-1 w-20 h-16 object-cover rounded" src={character.images[0]} alt={character.name} />    
-                <h2 className="col-span-3 pl-4 text-lg font-semibold">Character Name: {character.name}</h2>
+            <li key={character.id} className=" flex flex-col items-center p-4 bg-white rounded shadow-md mb-4 border border-gray-300 divide-x w-100">
+                <img className="col-span-1 w-20 h-16 object-cover rounded h-4/5" src={character.images[0]} alt="No image for ${character.name}" />    
+                <h2 className="col-span-3 pl-4 text-lg font-semibold h-1/5">Character Name: {character.name}</h2>
             </li>
         ))}
     </ul>
