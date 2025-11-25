@@ -1,8 +1,11 @@
-import List from './List'
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MyToDoList from './MyToDoList'
+
 import './App.css'
-import Character from './Character';
+
+import Users from './Users'
+import Product from './Porduct'
+import ProdDes from './ProdDes';
 
 function App() {
   return (
@@ -13,10 +16,20 @@ function App() {
                 <Route path="/list" element={<List />} />
                 rou
             </Routes>
-        </Router>  */}
+        </Router> 
+        <Character/> */}
+        <Router>
+            <Routes>
+                <Route path="/" exact Component={Product} />
+                <Route path="/Product/:id" Component={ProdDes} />
+                
+            </Routes>
+        </Router> 
+       
 
-        <Character/>
-      
+        
+
+              
     </>
   )
 }
