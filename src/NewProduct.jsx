@@ -62,7 +62,7 @@ const handleSubmit = async (event) => {
 };
 
 return (
-    <div className="top-0 p-4 max-w-sm mx-auto bg-white rounded-xl shadow-md space-y-4">
+    <div className="transition delay-150 duration-300 ease-in-out top-0 p-4 max-w-sm mx-auto bg-white rounded-xl shadow-md space-y-4">
         <h2 className="text-2xl font-bold text-center">Add New Product</h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
             <div>

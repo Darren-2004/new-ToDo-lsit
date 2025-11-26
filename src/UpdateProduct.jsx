@@ -1,118 +1,54 @@
-import React, { useState, useEffect } from 'react';
+// src/Login.jsx
+import React, { useState } from 'react';
 import axios from 'axios';
-import NewProduct from './NewProduct';
-import UpdateProduct from './UpdateProduct'; // Import the new component
+import { useNavigate } from 'react-router-dom';
 
-const API_URL = 'https://simple-fastapi-crud-app.onrender.com/products';
+const Login = ({ setToken }) => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
-const Product = () => {
-    const [products, setProducts] = useState([]);
-    const [error, setError] = useState(null);
-    const [displayPopUp, setDisplayPopUp] = useState(false);
-    const [displayUpdatePopUp, setDisplayUpdatePopUp] = useState(false);
-    const [currentProduct, setCurrentProduct] = useState(null); // State for the current product to update
-
-    useEffect(() => {
-        fetchProducts();
-    }, []);
-
-    const fetchProducts = async () => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         try {
-            const response = await axios.get(API_URL);
-            if (response.status !== 200) {
-                throw new Error(`HTTP error! status : ${response.status}`);
-            }
-            setProducts(response.data);
-        } catch (err) {
-            console.error(err);
-            setError("Failed to fetch products.");
+            const response = await axios.post('http://localhost:4000/login', { username, password });
+            setToken(response.data.token); // Save the token
+            localStorage.setItem('token', response.data.token); // Persist token
+            navigate('/products'); // Redirect to products page
+        } catch (error) {
+            setError('Login failed. Please check your credentials.');
         }
-    };
-
-    const updateProductStock = async (id, newStock) => {
-        try {
-            await axios.put(`${API_URL}/${id}`, { in_stock: newStock });
-            fetchProducts();
-        } catch (err) {
-            console.error(err);
-            setError("Failed to update product stock.");
-        }
-    };
-
-    const deleteProduct = async (id) => {
-        try {
-            await axios.delete(`${API_URL}/${id}`);
-            fetchProducts();
-        } catch (err) {
-            console.error(err);
-            setError("Failed to delete product.");
-        }
-    };
-
-    const clearInputs = () => {
-        // Clear necessary inputs if needed
-    };
-
-    const togglePopUp = () => {
-        setDisplayPopUp(!displayPopUp);
-    };
-
-    const toggleUpdatePopUp = () => {
-        setDisplayUpdatePopUp(!displayUpdatePopUp);
-    };
-
-    const openUpdatePopup = (product) => {
-        setCurrentProduct(product);
-        toggleUpdatePopUp();
     };
 
     return (
-        <>
-            <div>
-                <h1>Product List</h1>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                <ul>
-                    {products.map(product => (
-                        product.in_stock > 0 ? (
-                            <li key={product.id}>
-                                {product.name} - ${product.price}
-                                <button onClick={() => {
-                                    if (product.in_stock > 1) {
-                                        updateProductStock(product.id, product.in_stock - 1);
-                                    } else {
-                                        deleteProduct(product.id);
-                                    }
-                                }}>
-                                    {product.in_stock > 1 ? "Remove One" : "Delete"}
-                                </button>
-                                <button onClick={() => openUpdatePopup(product)}>Edit</button>
-                                <p>In Stock: {product.in_stock}</p>
-                            </li>
-                        ) : null
-                    ))}
-                </ul>
-                <button className='border bg-gray-500 p-2 rounded' onClick={togglePopUp}>
-                    Add product
-                </button>
-            </div>
-
-            {displayPopUp && (
-                <NewProduct 
-                    fetchProducts={fetchProducts}
-                    clearInputs={clearInputs}
-                    togglePopUp={togglePopUp}
+        <div className='flex justify-center items-center min-h-screen bg-gray-100'>
+            <form onSubmit={handleSubmit} className='bg-white p-8 rounded-lg shadow-md w-96'>
+                <h2 className='text-2xl font-bold mb-4 text-center'>Login</h2>
+                {error && <p className='text-red-500 mb-4 text-center'>{error}</p>}
+                <input
+                    type='text'
+                    placeholder='Username'
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                    className='w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:border-blue-500'
                 />
-            )}
-
-            {displayUpdatePopUp && currentProduct && (
-                <UpdateProduct 
-                    product={currentProduct} 
-                    fetchProducts={fetchProducts} 
-                    togglePopUp={toggleUpdatePopUp} 
+                <input
+                    type='password'
+                    placeholder='Password'
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className='w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:border-blue-500'
                 />
-            )}
-        </>
+            <button type='submit' className='w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 font-semibold'>Login</button>
+            <p className='text-center mt-4 text-gray-600'>
+                Don't have an account? <Link to='/register' className='text-blue-500 hover:underline'>Sign up</Link>
+            </p>
+            </form>
+        </div>
     );
 };
 
-export default Product;
+export default Login;
