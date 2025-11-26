@@ -126,8 +126,16 @@ const Product = () => {
 
     return (
         <>
-            <div>
-                <h1 className="text-xl font-bold">Product List</h1>
+                <div className="bg-blue-600 text-white p-4 mb-4 flex justify-between items-center rounded">
+                    <h1 className="text-2xl font-bold">Product List</h1>
+                    <button 
+                        onClick={logout}
+                        className='bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded font-semibold'
+                    >
+                        Logout
+                    </button>
+                </div>
+                <div>
                 {error && <p className="text-red-500">{error}</p>}
                 <ul className="space-y-4">
                     {products.map(product => (
